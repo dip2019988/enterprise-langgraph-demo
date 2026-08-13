@@ -9,14 +9,23 @@ load_dotenv(dotenv_path=env_path if env_path.exists() else None)
 
 class Settings:
     PROJECT_NAME: str = "Enterprise Smart Incident Resolution Agent"
-    VERSION: str = "4.0.0"
+    VERSION: str = "5.0.0"
+
+    # Logging Settings
+
+    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
     # OpenAI Settings
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     OPENAI_MODEL_NAME: str = os.getenv("OPENAI_MODEL_NAME", "gpt-4o-mini")
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.1"))
 
-    # System Limits
+    # LangSmith Settings
+    LANGCHAIN_TRACING_V2: str = os.getenv("LANGCHAIN_TRACING_V2", "true")
+    LANGCHAIN_API_KEY: str = os.getenv("LANGCHAIN_API_KEY", "")
+    LANGCHAIN_PROJECT: str = os.getenv("LANGCHAIN_PROJECT", "Enterprise-Incident-Resolution-Agent")
+
+    # Operational Limits
     MAX_RETRY_COUNT: int = 2
     CONFIDENCE_THRESHOLD: int = 70
 
@@ -29,25 +38,18 @@ class Settings:
     # Mem0 Settings
     MEM0_API_KEY: str = os.getenv("MEM0_API_KEY", "")
 
-    # MCP URLs
+    # MCP Endpoints
     MCP_MONITORING_URL: str = os.getenv("MCP_MONITORING_URL", "http://localhost:8001")
     MCP_GITHUB_URL: str = os.getenv("MCP_GITHUB_URL", "http://localhost:8002")
     MCP_BILLING_URL: str = os.getenv("MCP_BILLING_URL", "http://localhost:8003")
 
-    # API Security & Authentication Settings
-    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "super-secret-enterprise-jwt-key-change-in-prod")
-    JWT_ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 8  # 8 Hours
+    # JWT Security
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "super-secret-enterprise-jwt-key")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 8
 
     # Paths
     DATA_DIR: Path = BASE_DIR / "data"
     KB_FILE_PATH: Path = DATA_DIR / "kb.json"
-    MONITORING_FILE_PATH: Path = DATA_DIR / "monitoring_telemetry.json"
-    GIT_FILE_PATH: Path = DATA_DIR / "git_repositories.json"
-    BILLING_FILE_PATH: Path = DATA_DIR / "billing_records.json"
-
-    # Logging
-    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
     @classmethod
     def validate(cls) -> None:
