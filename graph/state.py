@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import List, Dict, Any, TypedDict, Annotated
 import operator
 
@@ -8,6 +9,8 @@ class IncidentState(TypedDict):
     department: str
     raw_query: str
     sanitized_query: str       # Query after PII redaction
+
+    presidio_token_map: Dict[str, str]  # Holds the secret Token -> Real Value map
     
     # Mem0 Context Integration
     user_preferences: List[str]
